@@ -45,6 +45,7 @@
     "webpack": "^1.13.3"
   },
   "dependencies": {
+    "actioncable": "^5.0.1",
     "redux": "^3.6.0"
   }
 }

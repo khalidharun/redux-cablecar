@@ -1,13 +1,10 @@
-/* global ActionCable */
+import ActionCable from 'actioncable';
 
 class CableCar {
 
-  constructor(store, channel, options = {}) {
-    if (typeof ActionCable === 'undefined') {
-      throw new Error('CableCar tried to connect to ActionCable but ActionCable is not defined');
-    }
-
+  constructor(url, store, channel, options = {}) {
     this.store = store;
+    this.url = url;
     this.initialize(channel, options);
   }
 
@@ -16,8 +13,7 @@ class CableCar {
     this.options = options;
 
     const params = Object.assign({ channel }, options);
-
-    this.subscription = ActionCable.createConsumer().subscriptions.create(params, {
+    this.subscription = ActionCable.createConsumer(this.url).subscriptions.create(params, {
       initialized: this.initialized,
       connected: this.connected,
       disconnected: this.disconnected,
