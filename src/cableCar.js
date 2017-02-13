@@ -28,27 +28,30 @@ class CableCar {
   }
 
   // Redux dispatch function
-  dispatch = (msg) => {
-    let action = typeof msg === 'object' ? msg : this.formatAction(msg);
-    action = Object.assign(action, { CableCar: false });
+  dispatch = (type, payload = {}) => {
+    const action = {
+      ...this.formatAction(type),
+      payload,
+      CableCar: false
+    };
     this.store.dispatch(action);
   }
 
   formatAction = msg => ({
-    type: msg,
+    type: `CABLECAR_${msg}`,
     car: this,
     channel: this.channel,
     options: this.options,
   })
 
   // ActionCable callback functions
-  initialized = () => this.dispatch('CABLECAR_INITIALIZED')
+  initialized = () => this.dispatch('INITIALIZED')
 
-  connected = () => this.dispatch('CABLECAR_CONNECTED')
+  connected = () => this.dispatch('CONNECTED')
 
   disconnected = () => this.dispatch('CABLECAR_DISCONNECTED')
 
-  received = msg => this.dispatch(msg)
+  received = (data) => this.dispatch('RECEIVED', data)
 
   rejected = () => {
     throw new Error(
