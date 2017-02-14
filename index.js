@@ -1,3 +1,2 @@
-import middleware from './src/middleware';
-
-export default middleware;
+export * from './src/actions';
+export * from './src/middleware';

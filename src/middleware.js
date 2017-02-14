@@ -1,39 +1,43 @@
 import CableCar from './cableCar';
 
 let car;
-let connected = false;
 
 const middleware = store => next => (action) => {
+
   switch (action.type) {
-    case 'CABLECAR_INITIALIZED':
-      car = action.car;
+    case 'CABLE_CONNECT':
+      const { url } = action.cable;
+      new CableCar(url, store);
       break;
-    case 'CABLECAR_CONNECTED':
-      connected = true;
+    case 'CABLE_SUBSCRIBE':
+      car.subscribe(action.cable.channel, action.cable.params);
       break;
-    case 'CABLECAR_DISCONNECTED':
-      connected = false;
+    case 'CABLE_UNSUBSCRIBE':
+      car.unsubscribe(action.cable.channel, action.cable.params);
       break;
-    case 'CABLECAR_DISCONNECT':
-      car.unsubscribe();
+    case 'CABLE_DISCONNECT':
+      car.disconnect();
       car = null;
       break;
-    case 'CABLECAR_CHANGE_CHANNEL':
-      car.changeChannel(action.channel, action.options || {});
+    case 'CABLE_SEND':
+      car.send(action.cable.channel, action.cable.params, action.payload);
+    default:
+      break;
+  }
+
+  const newState = next(action);
+
+  switch (action.type) {
+    case 'CABLE_CONNECTED':
+      car = action.cable.car;
       break;
     default:
       break;
   }
 
-  if (connected && (action.CableCar !== false)) {
-    car.send(action);
-  }
-
-  const propagate = action.CableCarOptimistic || (action.CableCar === false);
-
-  return (propagate ? next(action) : store.getState());
+  return newState;
 };
 
-middleware.connect = (url, store, channel, options) => new CableCar(url, store, channel, options);
+middleware.connect = (url, store) => new CableCar(url, store);
 
-export default middleware;
+export { middleware };
