@@ -5,7 +5,7 @@ module.exports = {
     path: './build',
     filename: 'cablecar.js',
     library: 'cablecar',
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'umd',
   },
   module: {
     loaders: [{
