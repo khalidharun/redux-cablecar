@@ -1,8 +1,8 @@
 module.exports = {
   devtool: 'source-map',
-  entry: './index.js',
+  entry: './src/index.js',
   output: {
-    path: './build',
+    path: './dist',
     filename: 'redux-cablecar.js',
     library: 'redux-cablecar',
     libraryTarget: 'umd',
