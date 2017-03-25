@@ -3,8 +3,8 @@ module.exports = {
   entry: './index.js',
   output: {
     path: './build',
-    filename: 'cablecar.js',
-    library: 'cablecar',
+    filename: 'redux-cablecar.js',
+    library: 'redux-cablecar',
     libraryTarget: 'umd',
   },
   module: {
