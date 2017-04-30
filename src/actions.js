@@ -1,32 +1,32 @@
-export function cableConnect(url) {
+export function connect(url) {
   return {
     type: 'CABLE_CONNECT',
     cable: { url }
   };
 }
 
-export function cableDisconnect() {
+export function disconnect() {
   return {
     type: 'CABLE_DISCONNECT',
     cable: {}
   };
 }
 
-export function cableSubscribe(channel, params) {
+export function subscribe(channel, params) {
   return {
     type: 'CABLE_SUBSCRIBE',
     cable: { channel, params }
   };
 }
 
-export function cableUnsubscribe(channel, params) {
+export function unsubscribe(channel, params) {
   return {
     type: 'CABLE_UNSUBSCRIBE',
     cable: { channel, params }
   };
 }
 
-export function cableSend(channel, params, payload) {
+export function send(channel, params, payload) {
   return {
     type: 'CABLE_SEND',
     cable: { channel, params },

@@ -1,2 +1,4 @@
-export * from './actions';
-export * from './middleware';
+import * as actions from './actions';
+import middleware from './middleware';
+
+export { actions, middleware };

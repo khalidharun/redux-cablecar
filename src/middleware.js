@@ -40,4 +40,4 @@ const middleware = store => next => (action) => {
 
 middleware.connect = (url, store) => new CableCar(url, store);
 
-export { middleware };
+export default middleware;
