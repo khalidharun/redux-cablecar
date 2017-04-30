@@ -1,11 +1,11 @@
 module.exports = {
   devtool: 'source-map',
-  entry: './index.js',
+  entry: './src/index.js',
   output: {
-    path: './build',
-    filename: 'cablecar.js',
-    library: 'cablecar',
-    libraryTarget: 'commonjs2',
+    path: './dist',
+    filename: 'redux-cablecar.js',
+    library: 'redux-cablecar',
+    libraryTarget: 'umd',
   },
   module: {
     loaders: [{

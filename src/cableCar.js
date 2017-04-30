@@ -1,76 +1,55 @@
-/* global ActionCable */
+import ActionCable from 'actioncable';
 
 class CableCar {
 
-  constructor(store, channel, options = {}) {
-    if (typeof ActionCable === 'undefined') {
-      throw new Error('CableCar tried to connect to ActionCable but ActionCable is not defined');
-    }
-
+  constructor(url, store) {
     this.store = store;
-    this.initialize(channel, options);
+    this.consumer = ActionCable.createConsumer(url);
+    this.store.dispatch({ type: 'CABLE_CONNECTED', cable: { car: this } });
   }
 
-  initialize = (channel, options) => {
-    this.channel = channel;
-    this.options = options;
-
-    const params = Object.assign({ channel }, options);
-
-    this.subscription = ActionCable.createConsumer().subscriptions.create(params, {
-      initialized: this.initialized,
-      connected: this.connected,
-      disconnected: this.disconnected,
-      received: this.received,
-      rejected: this.rejected,
-    });
-  }
-
-  changeChannel = (channel, options = {}) => {
-    this.unsubscribe();
-    this.initialize(channel, options);
-  }
-
-  // Redux dispatch function
-  dispatch = (msg) => {
-    let action = typeof msg === 'object' ? msg : this.formatAction(msg);
-    action = Object.assign(action, { CableCar: false });
+  dispatch(type, cable, payload = {}) {
+    const action = {
+      type: `CABLE_${type}`,
+      cable,
+      payload,
+    };
     this.store.dispatch(action);
   }
 
-  formatAction = msg => ({
-    type: msg,
-    car: this,
-    channel: this.channel,
-    options: this.options,
-  })
-
-  // ActionCable callback functions
-  initialized = () => this.dispatch('CABLECAR_INITIALIZED')
-
-  connected = () => this.dispatch('CABLECAR_CONNECTED')
-
-  disconnected = () => this.dispatch('CABLECAR_DISCONNECTED')
-
-  received = msg => this.dispatch(msg)
-
-  rejected = () => {
-    throw new Error(
-      `CableCar: Attempt to connect was rejected.
-      (Channel: ${this.channel})`,
-    );
+  subscribe(channel, params) {
+    const options = { channel , ...params};
+    const prefix = channel.toUpperCase();
+    this.subscription = this.consumer.subscriptions.create(options, {
+      initialized:  () => this.dispatch(`${prefix}_INITIALIZED`, options),
+      connected:    () => this.dispatch(`${prefix}_CONNECTED`, options),
+      disconnected: () => this.dispatch(`${prefix}_DISCONNECTED`, options),
+      received: (data) => this.dispatch(`${prefix}_RECEIVED`, options, data),
+      rejected:     () => {
+        this.dispatch(`${prefix}_REJECTED`, options);
+        throw new Error(`ActionCable: Attempt to subscribe was rejected. (${JSON.stringify(options)})`);
+      }
+    });
   }
 
-  // ActionCable subscription functions (exposed globally)
-  perform = (method, payload) => this.subscription.perform(method, payload)
+  send(channel, params, payload) {
+    const options = { channel, ...params };
+    const identifier = JSON.stringify(options);
+    const subscriptions = this.consumer.subscriptions.findAll(identifier);
+    subscriptions.map(item => item.send(payload));
+  }
 
-  send = action => this.subscription.send(action)
+  unsubscribe(channel, params) {
+    const options = { channel, ...params };
+    const identifier = JSON.stringify(options);
+    const subscriptions = this.consumer.subscriptions.findAll(identifier);
+    subscriptions.map( x => x.unsubscribe());
+  }
 
-  unsubscribe = () => {
-    this.subscription.unsubscribe();
-    this.disconnected();
+  disconnect() {
+    this.consumer.disconnect();
+    this.store.dispatch({ type: 'CABLE_DISCONNECTED' });
   }
 }
-
 
 export default CableCar;
