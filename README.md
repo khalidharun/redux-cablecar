@@ -16,7 +16,7 @@ Uses [yarn](https://yarnpkg.com) as a package manager.
 ```js6
 import { createStore, applyMiddleware } from 'redux';
 import reducer from './reducers/rootReducer';
-import cablecar from 'redux-cablecar';
+import { middleware as cablecar } from 'redux-cablecar';
 
 const store = createStore(reducer, applyMiddleware(cablecar...));
 
