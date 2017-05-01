@@ -2,14 +2,6 @@
   "name": "redux-cablecar",
   "version": "1.2.0",
   "description": "Redux middleware for Rails ActionCable",
-  "main": "./dist/bundle.js",
-  "scripts": {
-    "build:umd": "webpack src/index.js dist/bundle.js",
-    "build:umd:min": "webpack -p src/index.js dist/bundle.min.js",
-    "build": "npm run build:umd && npm run build:umd:min",
-    "prepublish": "npm run build",
-    "test": "./node_modules/mocha/bin/mocha --recursive --compilers js:babel-core/register"
-  },
   "author": "Khalid Harun",
   "repository": {
     "type": "git",
@@ -24,6 +16,18 @@
     "redux-cablecar"
   ],
   "license": "MIT",
+  "main": "./dist/bundle.js",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build:umd": "webpack src/index.js dist/bundle.js",
+    "build:umd:min": "webpack -p src/index.js dist/bundle.min.js",
+    "build": "npm run build:umd && npm run build:umd:min",
+    "prepublish": "npm run build",
+    "test": "./node_modules/mocha/bin/mocha --recursive --compilers js:babel-core/register"
+  },
   "devDependencies": {
     "babel-core": "^6.9.1",
     "babel-eslint": "^7.1.1",
