@@ -25,8 +25,10 @@
     "build:umd": "webpack src/index.js dist/bundle.js",
     "build:umd:min": "webpack -p src/index.js dist/bundle.min.js",
     "build": "npm run build:umd && npm run build:umd:min",
+    "jest": "./node_modules/.bin/jest",
+    "jest:watch": "./node_modules/.bin/jest --watch",
     "prepublish": "npm run build",
-    "test": "./node_modules/mocha/bin/mocha --recursive --compilers js:babel-core/register"
+    "test": "npm run jest"
   },
   "devDependencies": {
     "babel-core": "^6.9.1",
@@ -39,6 +41,7 @@
     "eslint": "^3.11.0",
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-plugin-import": "^2.2.0",
+    "jest": "^19.0.2",
     "mocha": "^3.2.0",
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0",
