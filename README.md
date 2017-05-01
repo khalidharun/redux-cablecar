@@ -1,6 +1,5 @@
-# CableCar (redux-cablecar)
-
-[Redux middleware](http://redux.js.org/docs/api/applyMiddleware.html) to connect [Redux](http://redux.js.org/) to [Rails 5 ActionCable](http://edgeguides.rubyonrails.org/action_cable_overview.html).  
+# CableCar (redux-cablecar) [![CircleCI](https://circleci.com/gh/khalidharun/redux-cablecar/tree/master.svg?style=svg&circle-token=bcf73c4ecf01d57aa0e49a14acdc013d42f84e76)](https://circleci.com/gh/khalidharun/redux-cablecar/tree/master)
+[Redux middleware](http://redux.js.org/docs/api/applyMiddleware.html) to connect [Redux](http://redux.js.org/) to [Rails 5 ActionCable](http://edgeguides.rubyonrails.org/action_cable_overview.html).
 
 It creates a websocket connection and a circular message flow from the client to the server.
 
@@ -23,7 +22,7 @@ const store = createStore(reducer, applyMiddleware(cablecar...));
 
 cablecar.connect(store, 'ChatChannel', { room: 'game' })
 ```
-This connects the Redux store to the ActionCable subscription `ChatChannel` with `params[:room] = "game"`.  
+This connects the Redux store to the ActionCable subscription `ChatChannel` with `params[:room] = "game"`.
 
 **Server Example:**
 ```rubyonrails
@@ -70,10 +69,10 @@ car.perform('activate', { data: ... })
 `CABLECAR_INITIALIZED`, `CABLECAR_CONNECTED`, `CABLECAR_DISCONNECTED`
 
 ###### Actions received by middleware:
-`CABLECAR_DISCONNECT` - destroys the websocket connection and the `CableCar` object  
+`CABLECAR_DISCONNECT` - destroys the websocket connection and the `CableCar` object
 `CABLECAR_CHANGE_CHANNEL` - reconnects to a new channel (takes `channel` and `options` properties)
 
-**Change Channel Example:**  
+**Change Channel Example:**
 ```rubyonrails
 ChatChannel.broadcast_to(
   "chat_green",
@@ -99,15 +98,15 @@ Actions originating on the client are sent to an ActionCable channel
 `--> CLIENT dispatches action --> middleware sends it on --> SERVER`
 
 ##### Optimistic Dispatches
-Actions originating on the client do not get sent to the reducers.  
+Actions originating on the client do not get sent to the reducers.
 
-Broadcasted messages from the server don't get re-dispatched right back to the server.  
+Broadcasted messages from the server don't get re-dispatched right back to the server.
 
-This creates a circular message flow between the client (Redux) and the server (ActionCable).  
+This creates a circular message flow between the client (Redux) and the server (ActionCable).
 
 However if `CableCarOtimistic: true` is in the action then the action will be sent to both the Rails Server, *and* on thru the Redux middlewares. These are considered 'optimistic' updates since when news comes back from the server it may conflict with what the client has already done. *Use with caution!*
 
-**optimistic action:**  
+**optimistic action:**
 `--> CLIENT dispatches action --> middleware sends it to the server (in addition to the next middleware) simultaneously --> CLIENT & SERVER`
 
 ##### Dispatch Redux Actions (w/o sending to ActionCable)
