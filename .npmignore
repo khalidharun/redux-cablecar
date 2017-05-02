@@ -1,7 +1,8 @@
-index.js
 src
 test
 .eslintrc
 webpack.config.js
 yarn.lock
 .DS_Store
+.babelrc
+circle.yml

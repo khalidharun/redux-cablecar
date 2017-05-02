@@ -16,7 +16,7 @@
     "redux-cablecar"
   ],
   "license": "MIT",
-  "main": "./dist/bundle.js",
+  "main": "./src/index.js",
   "files": [
     "src",
     "dist"
