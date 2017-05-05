@@ -78,120 +78,91 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
+Object.defineProperty(exports,"__esModule",{value:true});exports.connect=connect;exports.
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.connect = connect;
-exports.disconnect = disconnect;
-exports.subscribe = subscribe;
-exports.unsubscribe = unsubscribe;
-exports.send = send;
-function connect(url) {
-  return {
-    type: 'CABLE_CONNECT',
-    cable: { url: url }
-  };
-}
 
-function disconnect() {
-  return {
-    type: 'CABLE_DISCONNECT',
-    cable: {}
-  };
-}
 
-function subscribe(channel, params) {
-  return {
-    type: 'CABLE_SUBSCRIBE',
-    cable: { channel: channel, params: params }
-  };
-}
 
-function unsubscribe(channel, params) {
-  return {
-    type: 'CABLE_UNSUBSCRIBE',
-    cable: { channel: channel, params: params }
-  };
-}
 
-function send(channel, params, payload) {
-  return {
-    type: 'CABLE_SEND',
-    cable: { channel: channel, params: params },
-    payload: payload
-  };
+disconnect=disconnect;exports.
+
+
+
+
+
+
+subscribe=subscribe;exports.
+
+
+
+
+
+
+unsubscribe=unsubscribe;exports.
+
+
+
+
+
+
+send=send;function connect(url){return{type:'CABLE_CONNECT',cable:{url:url}};}function disconnect(){return{type:'CABLE_DISCONNECT',cable:{}};}function subscribe(channel,params){return{type:'CABLE_SUBSCRIBE',cable:{channel:channel,params:params}};}function unsubscribe(channel,params){return{type:'CABLE_UNSUBSCRIBE',cable:{channel:channel,params:params}};}function send(channel,params,payload){
+return{
+type:'CABLE_SEND',
+cable:{channel:channel,params:params},
+payload:payload};
+
 }
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+Object.defineProperty(exports,"__esModule",{value:true});var _cableCar=__webpack_require__(3);var _cableCar2=_interopRequireDefault(_cableCar);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+
+var car=void 0;
+
+var middleware=function middleware(store){return function(next){return function(action){
+
+switch(action.type){
+case'CABLE_CONNECT':var
+url=action.cable.url;
+new _cableCar2.default(url,store);
+break;
+case'CABLE_SUBSCRIBE':
+car.subscribe(action.cable.channel,action.cable.params);
+break;
+case'CABLE_UNSUBSCRIBE':
+car.unsubscribe(action.cable.channel,action.cable.params);
+break;
+case'CABLE_DISCONNECT':
+car.disconnect();
+car=null;
+break;
+case'CABLE_SEND':
+car.send(action.cable.channel,action.cable.params,action.payload);
+default:
+break;}
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var newState=next(action);
 
-var _cableCar = __webpack_require__(3);
+switch(action.type){
+case'CABLE_CONNECTED':
+car=action.cable.car;
+break;
+default:
+break;}
 
-var _cableCar2 = _interopRequireDefault(_cableCar);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+return newState;
+};};};
 
-var car = void 0;
+middleware.connect=function(url,store){return new _cableCar2.default(url,store);};exports.default=
 
-var middleware = function middleware(store) {
-  return function (next) {
-    return function (action) {
-
-      switch (action.type) {
-        case 'CABLE_CONNECT':
-          var url = action.cable.url;
-
-          new _cableCar2.default(url, store);
-          break;
-        case 'CABLE_SUBSCRIBE':
-          car.subscribe(action.cable.channel, action.cable.params);
-          break;
-        case 'CABLE_UNSUBSCRIBE':
-          car.unsubscribe(action.cable.channel, action.cable.params);
-          break;
-        case 'CABLE_DISCONNECT':
-          car.disconnect();
-          car = null;
-          break;
-        case 'CABLE_SEND':
-          car.send(action.cable.channel, action.cable.params, action.payload);
-        default:
-          break;
-      }
-
-      var newState = next(action);
-
-      switch (action.type) {
-        case 'CABLE_CONNECTED':
-          car = action.cable.car;
-          break;
-        default:
-          break;
-      }
-
-      return newState;
-    };
-  };
-};
-
-middleware.connect = function (url, store) {
-  return new _cableCar2.default(url, store);
-};
-
-exports.default = middleware;
+middleware;
 
 /***/ }),
 /* 2 */
@@ -806,131 +777,71 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function() {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _actioncable=__webpack_require__(2);var _actioncable2=_interopRequireDefault(_actioncable);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}var
+
+CableCar=function(){
+
+function CableCar(url,store){_classCallCheck(this,CableCar);
+this.store=store;
+this.consumer=_actioncable2.default.createConsumer(url);
+this.store.dispatch({type:'CABLE_CONNECTED',cable:{car:this}});
+}_createClass(CableCar,[{key:'dispatch',value:function dispatch(
+
+type,cable){var payload=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{};
+var action={
+type:'CABLE_'+type,
+cable:cable,
+payload:payload};
+
+this.store.dispatch(action);
+}},{key:'subscribe',value:function subscribe(
+
+channel,params){var _this=this;
+var options=_extends({channel:channel},params);
+var prefix=channel.toUpperCase();
+this.subscription=this.consumer.subscriptions.create(options,{
+initialized:function initialized(){return _this.dispatch(prefix+'_INITIALIZED',options);},
+connected:function connected(){return _this.dispatch(prefix+'_CONNECTED',options);},
+disconnected:function disconnected(){return _this.dispatch(prefix+'_DISCONNECTED',options);},
+received:function received(data){return _this.dispatch(prefix+'_RECEIVED',options,data);},
+rejected:function rejected(){
+_this.dispatch(prefix+'_REJECTED',options);
+throw new Error('ActionCable: Attempt to subscribe was rejected. ('+JSON.stringify(options)+')');
+}});
+
+}},{key:'send',value:function send(
+
+channel,params,payload){
+var options=_extends({channel:channel},params);
+var identifier=JSON.stringify(options);
+var subscriptions=this.consumer.subscriptions.findAll(identifier);
+subscriptions.map(function(item){return item.send(payload);});
+}},{key:'unsubscribe',value:function unsubscribe(
+
+channel,params){
+var options=_extends({channel:channel},params);
+var identifier=JSON.stringify(options);
+var subscriptions=this.consumer.subscriptions.findAll(identifier);
+subscriptions.map(function(x){return x.unsubscribe();});
+}},{key:'disconnect',value:function disconnect()
+
+{
+this.consumer.disconnect();
+this.store.dispatch({type:'CABLE_DISCONNECTED'});
+}}]);return CableCar;}();exports.default=
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _actioncable = __webpack_require__(2);
-
-var _actioncable2 = _interopRequireDefault(_actioncable);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var CableCar = function () {
-  function CableCar(url, store) {
-    _classCallCheck(this, CableCar);
-
-    this.store = store;
-    this.consumer = _actioncable2.default.createConsumer(url);
-    this.store.dispatch({ type: 'CABLE_CONNECTED', cable: { car: this } });
-  }
-
-  _createClass(CableCar, [{
-    key: 'dispatch',
-    value: function dispatch(type, cable) {
-      var payload = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-      var action = {
-        type: 'CABLE_' + type,
-        cable: cable,
-        payload: payload
-      };
-      this.store.dispatch(action);
-    }
-  }, {
-    key: 'subscribe',
-    value: function subscribe(channel, params) {
-      var _this = this;
-
-      var options = _extends({ channel: channel }, params);
-      var prefix = channel.toUpperCase();
-      this.subscription = this.consumer.subscriptions.create(options, {
-        initialized: function initialized() {
-          return _this.dispatch(prefix + '_INITIALIZED', options);
-        },
-        connected: function connected() {
-          return _this.dispatch(prefix + '_CONNECTED', options);
-        },
-        disconnected: function disconnected() {
-          return _this.dispatch(prefix + '_DISCONNECTED', options);
-        },
-        received: function received(data) {
-          return _this.dispatch(prefix + '_RECEIVED', options, data);
-        },
-        rejected: function rejected() {
-          _this.dispatch(prefix + '_REJECTED', options);
-          throw new Error('ActionCable: Attempt to subscribe was rejected. (' + JSON.stringify(options) + ')');
-        }
-      });
-    }
-  }, {
-    key: 'send',
-    value: function send(channel, params, payload) {
-      var options = _extends({ channel: channel }, params);
-      var identifier = JSON.stringify(options);
-      var subscriptions = this.consumer.subscriptions.findAll(identifier);
-      subscriptions.map(function (item) {
-        return item.send(payload);
-      });
-    }
-  }, {
-    key: 'unsubscribe',
-    value: function unsubscribe(channel, params) {
-      var options = _extends({ channel: channel }, params);
-      var identifier = JSON.stringify(options);
-      var subscriptions = this.consumer.subscriptions.findAll(identifier);
-      subscriptions.map(function (x) {
-        return x.unsubscribe();
-      });
-    }
-  }, {
-    key: 'disconnect',
-    value: function disconnect() {
-      this.consumer.disconnect();
-      this.store.dispatch({ type: 'CABLE_DISCONNECTED' });
-    }
-  }]);
-
-  return CableCar;
-}();
-
-exports.default = CableCar;
+CableCar;
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+Object.defineProperty(exports,"__esModule",{value:true});exports.middleware=exports.actions=undefined;var _actions=__webpack_require__(0);var actions=_interopRequireWildcard(_actions);
+var _middleware=__webpack_require__(1);var _middleware2=_interopRequireDefault(_middleware);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}exports.
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.middleware = exports.actions = undefined;
-
-var _actions = __webpack_require__(0);
-
-var actions = _interopRequireWildcard(_actions);
-
-var _middleware = __webpack_require__(1);
-
-var _middleware2 = _interopRequireDefault(_middleware);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-exports.actions = actions;
-exports.middleware = _middleware2.default;
+actions=actions;exports.middleware=_middleware2.default;exports.default=
+{actions:actions,middleware:_middleware2.default};
 
 /***/ })
 /******/ ]);
