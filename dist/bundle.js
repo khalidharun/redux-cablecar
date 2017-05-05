@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -120,7 +120,7 @@ payload:payload};
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-Object.defineProperty(exports,"__esModule",{value:true});var _cableCar=__webpack_require__(3);var _cableCar2=_interopRequireDefault(_cableCar);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+Object.defineProperty(exports,"__esModule",{value:true});var _cableCar=__webpack_require__(4);var _cableCar2=_interopRequireDefault(_cableCar);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 
 var car=void 0;
 
@@ -777,7 +777,28 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function() {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _actioncable=__webpack_require__(2);var _actioncable2=_interopRequireDefault(_actioncable);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}var
+/* WEBPACK VAR INJECTION */(function(global) {Object.defineProperty(exports,"__esModule",{value:true});var _actioncable=__webpack_require__(2);var _actioncable2=_interopRequireDefault(_actioncable);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+
+_actioncable2.default.getConfig=function(){return null;};
+_actioncable2.default.createWebSocketURL=function(url){return url.replace(/^http/,'ws');};
+
+var oldOpen=_actioncable2.default.Connection.prototype.open;
+_actioncable2.default.Connection.prototype.open=function(){
+var result=oldOpen.apply(this);
+this.webSocket.protocol='actioncable-v1-json';
+return result;
+};
+
+global.document={
+addEventListener:function addEventListener(){},
+removeEventListener:function removeEventListener(){}};exports.default=_actioncable2.default;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _actioncable=__webpack_require__(3);var _actioncable2=_interopRequireDefault(_actioncable);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}var
 
 CableCar=function(){
 
@@ -834,7 +855,7 @@ this.store.dispatch({type:'CABLE_DISCONNECTED'});
 CableCar;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 Object.defineProperty(exports,"__esModule",{value:true});exports.middleware=exports.actions=undefined;var _actions=__webpack_require__(0);var actions=_interopRequireWildcard(_actions);
@@ -842,6 +863,33 @@ var _middleware=__webpack_require__(1);var _middleware2=_interopRequireDefault(_
 
 actions=actions;exports.middleware=_middleware2.default;exports.default=
 {actions:actions,middleware:_middleware2.default};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
 
 /***/ })
 /******/ ]);

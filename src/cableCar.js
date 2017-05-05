@@ -1,4 +1,4 @@
-import ActionCable from 'actioncable';
+import ActionCable from './actioncable';
 
 class CableCar {
 
