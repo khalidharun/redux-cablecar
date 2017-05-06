@@ -1,8 +1,6 @@
-import ActionCable from 'actioncable';
-
 class CableCar {
 
-  constructor(url, store) {
+  constructor(ActionCable, url, store) {
     this.store = store;
     this.consumer = ActionCable.createConsumer(url);
     this.store.dispatch({ type: 'CABLE_CONNECTED', cable: { car: this } });

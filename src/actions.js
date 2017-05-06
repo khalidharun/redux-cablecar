@@ -1,7 +1,7 @@
-export function connect(url) {
+export function connect(ActionCable, url) {
   return {
     type: 'CABLE_CONNECT',
-    cable: { url }
+    cable: { ActionCable, url }
   };
 }
 

@@ -6,8 +6,8 @@ const middleware = store => next => (action) => {
 
   switch (action.type) {
     case 'CABLE_CONNECT':
-      const { url } = action.cable;
-      new CableCar(url, store);
+      const { ActionCable, url } = action.cable;
+      new CableCar(ActionCable, url, store);
       break;
     case 'CABLE_SUBSCRIBE':
       car.subscribe(action.cable.channel, action.cable.params);
