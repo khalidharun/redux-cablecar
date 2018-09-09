@@ -16,7 +16,7 @@ class CableCar {
   }
 
   subscribe(channel, params) {
-    const options = { channel , ...params};
+    const options = { channel , ...params };
     const prefix = channel.toUpperCase();
     this.subscription = this.consumer.subscriptions.create(options, {
       initialized:  () => this.dispatch(`${prefix}_INITIALIZED`, options),

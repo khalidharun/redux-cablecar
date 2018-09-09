@@ -24,11 +24,11 @@
   "scripts": {
     "build:umd": "webpack src/index.js dist/bundle.js",
     "build:umd:min": "webpack -p src/index.js dist/bundle.min.js",
-    "build": "npm run build:umd && npm run build:umd:min",
+    "build": "yarn build:umd && yarn build:umd:min",
     "jest": "./node_modules/.bin/jest",
     "jest:watch": "./node_modules/.bin/jest --watch",
-    "prepublish": "npm run build",
-    "test": "npm run jest"
+    "prepublish": "yarn build",
+    "test": "yarn jest"
   },
   "devDependencies": {
     "babel-core": "^6.9.1",
