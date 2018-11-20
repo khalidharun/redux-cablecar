@@ -1,6 +1,6 @@
 {
   "name": "redux-cablecar",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Redux middleware for Rails ActionCable",
   "author": "Khalid Harun",
   "repository": {
