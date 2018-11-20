@@ -31,10 +31,8 @@
     "test:watch": "yarn test --watch"
   },
   "devDependencies": {
-    "babel-core": "^6.9.1",
     "babel-eslint": "^7.1.1",
     "babel-preset-babili": "0.0.9",
-    "babel-preset-react-native-stage-0": "^1.0.1",
     "chai": "^3.5.0",
     "eslint": "^3.11.0",
     "eslint-config-airbnb-base": "^10.0.1",
@@ -45,8 +43,10 @@
     "sinon-chai": "^2.8.0"
   },
   "dependencies": {
+    "babel-core": "^6.9.1",
+    "babel-preset-react-native-stage-0": "^1.0.1",
     "babel-loader": "^6.2.8",
     "redux": "^3.6.0",
-    "webpack": "^2.4.1"
+    "webpack": "2.4.1"
   }
 }
