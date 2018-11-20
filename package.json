@@ -23,8 +23,8 @@
   ],
   "scripts": {
     "build": "yarn build:umd && yarn build:umd:min",
-    "build:umd": "webpack src/index.js dist/bundle.js",
-    "build:umd:min": "webpack -p src/index.js dist/bundle.min.js",
+    "build:umd": "yarn webpack src/index.js dist/bundle.js",
+    "build:umd:min": "yarn webpack -p src/index.js dist/bundle.min.js",
     "postinstall": "yarn build",
     "prepublish": "yarn build",
     "test": "yarn jest",
