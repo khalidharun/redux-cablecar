@@ -1,6 +1,6 @@
 {
   "name": "redux-cablecar",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Redux middleware for Rails ActionCable",
   "author": "Khalid Harun",
   "repository": {
@@ -22,12 +22,10 @@
     "dist"
   ],
   "scripts": {
+    "build": "yarn build:umd && yarn build:umd:min",
     "build:umd": "webpack src/index.js dist/bundle.js",
     "build:umd:min": "webpack -p src/index.js dist/bundle.min.js",
-    "build": "yarn build:umd && yarn build:umd:min",
-    "postinstall": "yarn test && yarn build",
-    "jest": "./node_modules/.bin/jest",
-    "jest:watch": "./node_modules/.bin/jest --watch",
+    "postinstall": "yarn build",
     "prepublish": "yarn build",
     "test": "yarn jest",
     "test:watch": "yarn test --watch"
