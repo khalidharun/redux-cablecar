@@ -16,14 +16,14 @@
     "redux-cablecar"
   ],
   "license": "MIT",
-  "main": "dist/bundle.js",
+  "main": "dist/bundle",
   "files": [
     "src",
     "dist"
   ],
   "scripts": {
-    "build:umd": "webpack -d src/index.js dist/bundle.js",
-    "build:umd:min": "webpack -p src/index.js dist/bundle.min.js",
+    "build:umd": "webpack -d ./src/index.js ./dist/bundle.js",
+    "build:umd:min": "webpack -p ./src/index.js ./dist/bundle.min.js",
     "build": "yarn build:umd && yarn build:umd:min",
     "prepare": "yarn build",
     "test": "jest",
