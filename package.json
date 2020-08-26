@@ -1,6 +1,6 @@
 {
   "name": "redux-cablecar",
-  "version": "1.4.5",
+  "version": "1.5.0",
   "description": "Redux middleware for Rails ActionCable",
   "author": "Khalid Harun",
   "repository": {
@@ -16,37 +16,38 @@
     "redux-cablecar"
   ],
   "license": "MIT",
-  "main": "./dist/bundle.js",
+  "main": "dist/bundle.js",
   "files": [
     "src",
     "dist"
   ],
   "scripts": {
+    "build:umd": "webpack -d src/index.js dist/bundle.js",
+    "build:umd:min": "webpack -p src/index.js dist/bundle.min.js",
     "build": "yarn build:umd && yarn build:umd:min",
-    "build:umd": "yarn webpack src/index.js dist/bundle.js",
-    "build:umd:min": "yarn webpack -p src/index.js dist/bundle.min.js",
-    "postinstall": "yarn build",
-    "prepublish": "yarn build",
-    "test": "yarn jest",
+    "prepare": "yarn build",
+    "test": "jest",
     "test:watch": "yarn test --watch"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
     "babel-eslint": "^7.1.1",
+    "babel-jest": "^26.3.0",
+    "babel-loader": "^8.1.0",
     "babel-preset-babili": "0.0.9",
     "chai": "^3.5.0",
     "eslint": "^3.11.0",
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-plugin-import": "^2.2.0",
-    "jest": "^19.0.2",
+    "jest": "^26.4.2",
     "mocha": "^3.2.0",
     "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "babel-core": "^6.9.1",
-    "babel-preset-react-native-stage-0": "^1.0.1",
-    "babel-loader": "^6.2.8",
-    "redux": "^3.6.0",
-    "webpack": "2.4.1"
+    "redux": "^3.6.0"
   }
 }
