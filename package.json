@@ -26,6 +26,7 @@
     "build:umd:min": "webpack -p ./src/index.js --output ./dist/bundle.min.js",
     "build": "yarn build:umd && yarn build:umd:min",
     "prepare": "yarn build",
+    "postinstall": "yarn build",
     "test": "jest",
     "test:watch": "yarn test --watch"
   },
