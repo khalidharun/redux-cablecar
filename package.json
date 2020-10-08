@@ -22,11 +22,10 @@
     "dist"
   ],
   "scripts": {
-    "build:umd": "webpack -d ./src/index.js --output ./dist/bundle.js",
-    "build:umd:min": "webpack -p ./src/index.js --output ./dist/bundle.min.js",
+    "build:umd": "yarn webpack -d ./src/index.js --output ./dist/bundle.js",
+    "build:umd:min": "yarn webpack -p ./src/index.js --output ./dist/bundle.min.js",
     "build": "yarn build:umd && yarn build:umd:min",
     "prepare": "yarn build",
-    "postinstall": "yarn build",
     "test": "jest",
     "test:watch": "yarn test --watch"
   },
